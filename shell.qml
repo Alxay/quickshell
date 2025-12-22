@@ -5,16 +5,19 @@ import Quickshell
 import Quickshell.Wayland
 import "./Modules/Bar"
 import "./Modules/Media"
-import "./Modules/Media"
+import "./Modules/Grim"
 
 ShellRoot {
     id: root
     property bool showMedia: false
-    
+    Component.onCompleted: {
+        Screenshot.init(); 
+    }
     Bar {
         id: mainBar
     }
     SpotifyCard{
         id: spotifyCard
+        anchor.window: mainBar.barr
     }
 }

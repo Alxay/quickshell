@@ -1,25 +1,42 @@
 import QtQuick
 import Quickshell
 import Quickshell.Services.Mpris
+import Quickshell.Wayland
 import "../../Theme/" // Colors
 
-PanelWindow {
-    property bool showMedia: root.showMedia
-    id: mediaWindow
-    anchors.top: true
-    anchors.right: true
-    visible: showMedia
-    margins.right: 70
-    margins.top: -2
-
+PopupWindow {
+    /*anchor.window: toplevel
+    anchor.rect.x: parentWindow.width / 2 - width / 2
+    anchor.rect.y: parentWindow.height
     width: 300
     height: 120
+    visible: true*/
+    property bool showMedia: root.showMedia
+    id: mediaWindow
+    visible: showMedia
+    anchor.rect.x: parentWindow.width/2 - implicitWidth/2
+    anchor.rect.y: parentWindow.height -5
+   
+    //Clip parent
+    // anchor.rect.x: anchor.window.implicitWidth / 2 - implicitWidth / 2
+    //align to right edge of parent window
+
+    
+
+    implicitWidth: 570
+    implicitHeight: 300
     color: "transparent" 
 
 Rectangle {
-    width: 300
-    height: 120
+    width: 570
+    height: 300
     color: Colors.barBackground
+
+        MouseArea{
+        anchors.fill: parent
+        hoverEnabled: true  // <--- TO JEST KLUCZOWE
+        onExited: root.showMedia = !root.showMedia
+    }
 
   
     

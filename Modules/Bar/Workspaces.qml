@@ -16,7 +16,7 @@ Row {
             property int wsId: index + 1
             
             // Sprawdzamy, czy ten konkretny workspace jest aktualnie aktywny (zaznaczony)
-            property bool isActive: Hyprland.focusedWorkspace.id === wsId
+            property bool isActive: Hyprland.focusedWorkspace ? Hyprland.focusedWorkspace.id === wsId : false
             width: 32
             height: 24
             radius: 15

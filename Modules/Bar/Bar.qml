@@ -1,12 +1,17 @@
 import QtQuick
 import Quickshell
 import Quickshell.Hyprland
+import Quickshell.Wayland
 import "../../Widgets"
 import "../../Theme" 
 import "../../Modules/Media"
 
 PanelWindow {
-    id: panelWindow
+    id: taskBar
+    property PanelWindow barr: taskBar
+     WlrLayershell.layer: WlrLayer.Top
+    
+      
     
     // Ustawiamy warstwę na Top, aby Bar był NA WIERZCHU
     Time { id: clock }
@@ -23,7 +28,11 @@ PanelWindow {
     color: "transparent"
 
     Rectangle { // Top bar
-    z:2
+    MouseArea{
+        anchors.fill: parent
+        hoverEnabled: true  // <--- TO JEST KLUCZOWE
+        onEntered: root.showMedia = !root.showMedia
+    }
     
         id: bar
         anchors.fill: parent
@@ -68,6 +77,7 @@ PanelWindow {
 
         MouseArea {
             anchors.fill: parent
+            // Możesz też reagować na zmiany stanu:
             onClicked: {
                 // Opcja A: Jeśli 'root' jest widoczny globalnie (zależy od wersji Quickshell):
                 root.showMedia = !root.showMedia
@@ -83,4 +93,5 @@ PanelWindow {
 
 
 }
+
 }
