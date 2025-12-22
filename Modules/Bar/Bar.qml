@@ -24,6 +24,7 @@ PanelWindow {
 
     Rectangle { // Top bar
     z:2
+    
         id: bar
         anchors.fill: parent
         color: Colors.barBackground

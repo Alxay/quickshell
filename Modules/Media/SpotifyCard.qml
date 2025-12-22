@@ -3,101 +3,84 @@ import Quickshell
 import Quickshell.Services.Mpris
 import "../../Theme/" // Colors
 
+PanelWindow {
+    property bool showMedia: root.showMedia
+    id: mediaWindow
+    anchors.top: true
+    anchors.right: true
+    visible: showMedia
+    margins.right: 70
+    margins.top: -2
 
-// ... wewnątrz twojego elementu ...
-// Rectangle {
-//     width: 200
-//     height: 30
-//     color: "transparent"
-//     anchors.right: parent.right
-//     anchors.rightMargin: 200
-//     GetPlayer {
-//         id: player
-//     }
-//     Text {
-//         font.family: "JetBrains Mono"
-//         anchors.centerIn: parent
-//         text: player.spotifyPlayer?.metadata["xesam:title"] ?? "Brak muzyki"
-//         color: "white"
-//     }
-//     Text{
-//         font.family: "JetBrains Mono"
-//         anchors.left: parent.left
-//         anchors.leftMargin: 0
-//         anchors.verticalCenter: parent.verticalCenter
-//         text: "←"
-//         font.pixelSize: 30
-//         MouseArea{
-//             anchors.fill: parent
-//             onClicked: {
-//                 player.spotifyPlayer.previous()
-//             }
-//         }
-//         color: "white"
-//     }
-//     Text{
-//         font.family: "JetBrains Mono"
-//         anchors.right: parent.right
-//         anchors.rightMargin: 0
-//         anchors.verticalCenter: parent.verticalCenter
-//         text: "→"
-//         font.pixelSize: 30
-//         MouseArea{
-//             anchors.fill: parent
-//             onClicked: {
-//                 player.spotifyPlayer.next()
-//             }
-//         }
-//         color: "white"
-//     }
-// }
+    width: 300
+    height: 120
+    color: "transparent" 
 
 Rectangle {
     width: 300
     height: 120
     color: Colors.barBackground
-    border.color: Colors.barBorder
-    border.width: 1
-    radius: 20
-    
 
-        GetPlayer {
-        id: player
+  
+    
+    // Custom borders to exclude the top
+    Rectangle {
+    width: parent.width
+    height: 1
+    color: Colors.barBorder
+    anchors.bottom: parent.bottom
+    }
+    Rectangle {
+    width: 1
+    height: parent.height
+    color: Colors.barBorder
+    anchors.left: parent.left
+    }
+    Rectangle {
+    width: 1
+    height: parent.height
+    color: Colors.barBorder
+    anchors.right: parent.right
+    }
+
+    GetPlayer {
+    id: player
     }
     Text {
-        font.family: "JetBrains Mono"
-        anchors.centerIn: parent
-        text: player.spotifyPlayer?.metadata["xesam:title"] ?? "Brak muzyki"
-        color: "white"
+    font.family: "JetBrains Mono"
+    anchors.centerIn: parent
+    text: player.spotifyPlayer?.metadata["xesam:title"] ?? "Brak muzyki"
+    color: "white"
     }
     Text{
-        font.family: "JetBrains Mono"
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.verticalCenter: parent.verticalCenter
-        text: "←"
-        font.pixelSize: 30
-        MouseArea{
-            anchors.fill: parent
-            onClicked: {
-                player.spotifyPlayer.previous()
-            }
+    font.family: "JetBrains Mono"
+    anchors.left: parent.left
+    anchors.leftMargin: 0
+    anchors.verticalCenter: parent.verticalCenter
+    text: "←"
+    font.pixelSize: 30
+    MouseArea{
+        anchors.fill: parent
+        onClicked: {
+        player.spotifyPlayer.previous()
         }
-        color: "white"
+    }
+    color: "white"
     }
     Text{
-        font.family: "JetBrains Mono"
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.verticalCenter: parent.verticalCenter
-        text: "→"
-        font.pixelSize: 30
-        MouseArea{
-            anchors.fill: parent
-            onClicked: {
-                player.spotifyPlayer.next()
-            }
+    font.family: "JetBrains Mono"
+    anchors.right: parent.right
+    anchors.rightMargin: 0
+    anchors.verticalCenter: parent.verticalCenter
+    text: "→"
+    font.pixelSize: 30
+    MouseArea{
+        anchors.fill: parent
+        onClicked: {
+        player.spotifyPlayer.next()
         }
-        color: "white"
     }
+    color: "white"
+    }
+}
 }
