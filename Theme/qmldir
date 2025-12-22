@@ -1,0 +1,3 @@
+module Theme
+# Słowo 'singleton' jest kluczowe!
+singleton Colors 1.0 Colors.qml
