@@ -64,29 +64,7 @@ PanelWindow {
             data: clock.date
             color: Colors.textPrimary
         }
-            Rectangle {
-        // Przycisk muzyki w barze
-        width: 40; height: 40
-        anchors.right: parent.right
-        anchors.rightMargin: 150
-        anchors.verticalCenter: parent.verticalCenter
-        radius: 20
-        color: "transparent"
-
-        Text { text: "🎵"; anchors.centerIn: parent }
-
-        MouseArea {
-            anchors.fill: parent
-            // Możesz też reagować na zmiany stanu:
-            onClicked: {
-                // Opcja A: Jeśli 'root' jest widoczny globalnie (zależy od wersji Quickshell):
-                root.showMedia = !root.showMedia
-                
-                // Opcja B (Bardziej 'hackerska' jeśli A nie działa):
-                // Znajdź obiekt 'root' przez parenta (może być trudne przy osobnych oknach)
-            }
-        }
-            }        
+       
             
             
             
