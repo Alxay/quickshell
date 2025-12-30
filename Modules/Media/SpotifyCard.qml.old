@@ -7,7 +7,7 @@ import "../../Theme/" // Colors
 
 PopupWindow {
     id: mediaWindow
-    
+
     // Logika: Okno jest widoczne tak długo, jak animacja trwa (opacity > 0)
     property bool showMedia: root.showMedia
     visible: bgShape.opacity > 0
@@ -18,37 +18,46 @@ PopupWindow {
 
     implicitWidth: 570
     implicitHeight: 300
-    color: "transparent" 
+    color: "transparent"
 
     Shape {
         id: bgShape
         width: 570
         height: 300
-        
+
         // --- ANIMACJA WYSUWANIA ---
         transformOrigin: Item.Bottom
         opacity: mediaWindow.showMedia ? 1 : 0
-        
+
         transform: Translate {
-            y: mediaWindow.showMedia ? 0 : 300 
-            Behavior on y { NumberAnimation { duration: 400; easing.type: Easing.OutExpo } }
+            y: mediaWindow.showMedia ? 0 : 300
+            Behavior on y {
+                NumberAnimation {
+                    duration: 400
+                    easing.type: Easing.OutExpo
+                }
+            }
         }
-        Behavior on opacity { NumberAnimation { duration: 300 } }
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 300
+            }
+        }
         // --------------------------
 
         layer.enabled: true
         layer.samples: 4
-        
+
         // Zmienna promienia - steruje wielkością wcięć
         property int r: 20
 
         // TŁO (RYSOWANIE KSZTAŁTU)
-       // TŁO (RYSOWANIE KSZTAŁTU)
+        // TŁO (RYSOWANIE KSZTAŁTU)
         ShapePath {
             strokeWidth: 1
             strokeColor: Colors.barBorder
             fillColor: Colors.barBackground
-            
+
             // Punkt startowy: Lewy górny róg (zewnętrzny)
             startX: 0
             startY: 0
@@ -65,38 +74,37 @@ PopupWindow {
 
             // 2. Lewa krawędź (prosta w dół)
             // Zatrzymujemy się o 'r' przed końcem wysokości, aby zrobić miejsce na łuk
-            PathLine { 
+            PathLine {
                 x: bgShape.r
-                y: height - bgShape.r 
+                y: height - bgShape.r
             }
-            
+
             // 3. Lewy Dolny Róg (WYPUKŁY - "Normal Round")
             // Zauważ przesunięcie x: 2 * r. Dlaczego?
             // Pierwsze 'r' to margines lewy (od wklęsłości), drugie 'r' to szerokość samego łuku.
             PathArc {
-                    x: bgShape.r
+                x: bgShape.r
                 y: height
-
             }
 
             // 4. Dolna krawędź
-            PathLine { 
+            PathLine {
                 x: width - (2 * bgShape.r)
-                y: height 
+                y: height
             }
-            
+
             // 5. Prawy Dolny Róg (WYPUKŁY - "Normal Round")
             PathArc {
-                    x: width -bgShape.r
-                    y:height
-            }
-            
-            // 6. Prawa krawędź
-            PathLine { 
                 x: width - bgShape.r
-                y: bgShape.r 
+                y: height
             }
-            
+
+            // 6. Prawa krawędź
+            PathLine {
+                x: width - bgShape.r
+                y: bgShape.r
+            }
+
             // 7. Prawy Górny Róg (WKLĘSŁY - "Reverse Round")
             PathArc {
                 x: width
@@ -105,8 +113,8 @@ PopupWindow {
                 radiusY: bgShape.r
                 direction: PathArc.CounterClockwise
             }
-            
-            // Nie zamykamy ścieżki na górze (PathLine do 0,0), 
+
+            // Nie zamykamy ścieżki na górze (PathLine do 0,0),
             // dzięki temu nie będzie tam obramowania (stroke), co wygląda lepiej przy styku z paskiem.
         }
 
@@ -115,7 +123,7 @@ PopupWindow {
         Item {
             anchors.fill: parent
             // Marginesy muszą być >= r (promień), żeby ominąć wcięcia
-            anchors.leftMargin: bgShape.r 
+            anchors.leftMargin: bgShape.r
             anchors.rightMargin: bgShape.r
             anchors.topMargin: 10
             anchors.bottomMargin: 10
@@ -123,10 +131,10 @@ PopupWindow {
             // Obsługa myszy (Zamykanie po zjechaniu)
             MouseArea {
                 anchors.fill: parent
-                hoverEnabled: true 
+                hoverEnabled: true
                 onExited: root.showMedia = false
                 // Opcjonalnie: preventStealing zapobiega problemom z klikaniem przycisków
-                preventStealing: true 
+                preventStealing: true
             }
 
             GetPlayer {
@@ -153,7 +161,7 @@ PopupWindow {
                 text: "←"
                 font.pixelSize: 30
                 color: maPrev.containsMouse ? "#bd93f9" : "white"
-                
+
                 MouseArea {
                     id: maPrev
                     anchors.fill: parent
@@ -171,7 +179,7 @@ PopupWindow {
                 text: "→"
                 font.pixelSize: 30
                 color: maNext.containsMouse ? "#bd93f9" : "white"
-                
+
                 MouseArea {
                     id: maNext
                     anchors.fill: parent

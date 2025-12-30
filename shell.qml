@@ -9,15 +9,15 @@ import "./Modules/Grim"
 
 ShellRoot {
     id: root
-    property bool showMedia: false
+    // property bool showMedia: false
     Component.onCompleted: {
         Screenshot.init(); 
     }
     Bar {
         id: mainBar
     }
-    SpotifyCard{
-        id: spotifyCard
-        anchor.window: mainBar.barr
-    }
+    // SpotifyCard{
+    //     id: spotifyCard
+    //     anchor.window: mainBar.barr
+    // }
 }
