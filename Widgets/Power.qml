@@ -1,5 +1,5 @@
 import QtQuick
-import "../../Theme"
+import "../Theme"
 
 Rectangle {
     anchors.verticalCenter: parent.verticalCenter

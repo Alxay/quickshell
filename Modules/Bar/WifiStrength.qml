@@ -6,17 +6,17 @@ import QtQuick
 Scope {
     id: root
     property string strength: "N/A"
-    property string speed: "N/A"
-    Process {
-        id: getNetworkSpeed
-        command: ["sh", "-c", "nmcli -t -f ACTIVE,SSID,RATE device wifi | grep '^tak' | cut -d ':' -f 3"]
-        running: true
-        stdout: StdioCollector {
-            onStreamFinished: {
-                root.speed = this.text.trim();
-            }
-        }
-    }
+    property string speed: ""
+    // Process {
+    //     id: getNetworkSpeed
+    //     command: ["sh", "-c", "IFACE=$(ip route | awk '/default/ {print $5}'); " + "RX1=$(cat /sys/class/net/$IFACE/statistics/rx_bytes); " + "sleep 1; " + "RX2=$(cat /sys/class/net/$IFACE/statistics/rx_bytes); " + "awk \"BEGIN {printf \\\"%.2f\\\", ($RX2-$RX1)*8/1000000}\""]
+    //     running: true
+    //     stdout: StdioCollector {
+    //         onStreamFinished: {
+    //             root.speed = this.text.trim() + " Mb/s";
+    //         }
+    //     }
+    // }
     Process {
         id: wifiProc
         command: ["sh", "-c", "nmcli -t -f ACTIVE,SSID,SIGNAL device wifi | grep '^tak' | cut -d ':' -f 3"]
@@ -27,15 +27,29 @@ Scope {
         }
     }
 
+    // function updateIcon(value) {
+    //     if (value >= 75) {
+    //         return "󰤨   " + root.speed; // (Full)
+    //     } else if (value >= 50) {
+    //         return "󰤥   " + root.speed; // (3/4)
+    //     } else if (value >= 25) {
+    //         return "󰤢   " + root.speed; // (1/2)
+    //     } else if (value > 0) {
+    //         return "󰤟   " + root.speed; // (1/4)
+    //     } else {
+    //         return "󰤮"; // (Disconnected / Off)
+    //     }
+    //     ;
+    // }
     function updateIcon(value) {
         if (value >= 75) {
-            return "󰤨   " + root.speed; // (Full)
+            return "󰤨" + root.speed; // (Full)
         } else if (value >= 50) {
-            return "󰤥   " + root.speed; // (3/4)
+            return "󰤥" + root.speed; // (3/4)
         } else if (value >= 25) {
-            return "󰤢   " + root.speed; // (1/2)
+            return "󰤢" + root.speed; // (1/2)
         } else if (value > 0) {
-            return "󰤟   " + root.speed; // (1/4)
+            return "󰤟" + root.speed; // (1/4)
         } else {
             return "󰤮"; // (Disconnected / Off)
         }
@@ -44,6 +58,9 @@ Scope {
         interval: 5000
         running: true
         repeat: true
-        onTriggered: wifiProc.running = true
+        onTriggered: {
+            wifiProc.running = true;
+            // getNetworkSpeed.running = true;
+        }
     }
 }

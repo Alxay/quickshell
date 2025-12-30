@@ -1,14 +1,14 @@
 import QtQuick
 import Quickshell.Io
 
-import "../../Theme"
+import "../Theme"
 
 Rectangle {
     required property string networkStrength
     anchors.verticalCenter: parent.verticalCenter
     anchors.right: parent.right
     implicitHeight: Colors.itemsHeight
-    implicitWidth: 90
+    implicitWidth: 40
     color: Colors.background
     border.color: Colors.barBorder
     radius: 15

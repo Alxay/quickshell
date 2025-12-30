@@ -3,7 +3,7 @@ import Quickshell
 import Quickshell.Services.Mpris
 import Quickshell.Wayland
 import QtQuick.Shapes
-import "../../Theme/" // Colors
+import "../Theme/" // Colors
 
 Rectangle {
     id: root
@@ -42,7 +42,7 @@ Rectangle {
         }
     }
     Image {
-        source: "../../Assets/arrow_right.svg"
+        source: "../Assets/arrow_right.svg"
         width: 20
         height: 20
         anchors.verticalCenter: parent.verticalCenter
@@ -58,7 +58,7 @@ Rectangle {
         }
     }
     Image {
-        source: "../../Assets/arrow_right.svg"
+        source: "../Assets/arrow_right.svg"
         width: 20
         height: 20
         anchors.verticalCenter: parent.verticalCenter

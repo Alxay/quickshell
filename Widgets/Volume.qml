@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell.Io
 
-import "../../Theme"
+import "../Theme"
 
 Rectangle {
     id: root
@@ -14,7 +14,7 @@ Rectangle {
     color: Colors.background
     border.color: Colors.barBorder
     radius: 15
-    anchors.rightMargin: 143
+    anchors.rightMargin: 93
     Text {
         // Wi-Fi symbol
         // text: "\uF1EB"  // Unicode symbol for Wi-Fi
@@ -33,10 +33,10 @@ Rectangle {
                 // Sprawdzamy kierunek scrolla (pionowy)
 
                 if (wheel.angleDelta.y > 0) {
-                    console.log("Scroll w górę - Podgłaśniam");
+                    // console.log("Scroll w górę - Podgłaśniam");
                     increaseVolume.running = true;
                 } else {
-                    console.log("Scroll w dół - Ściszam");
+                    // console.log("Scroll w dół - Ściszam");
                     decreaseVolume.running = true;
                 }
 

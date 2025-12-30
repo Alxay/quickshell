@@ -10,10 +10,11 @@ QtObject {
     property color active: '#e389fa'
 
     // Kolory Workspace'ów
-    property color wsActive: '#07da94'         // Aktywny
-    property color wsActiveBorder: '#00ffffff'   // Ramka aktywnego
-    property color wsOccupied: '#00000000'       // Zajęty
-    property color wsEmpty: '#001b1b1b'         // Pusty
+    property color wsActive: '#a707da94'         // Aktywny
+    property color wsBg: '#001b1b1b'          // Pusty
+    property color wsText: '#ffffff'        // Tekst
+
+    // Bar
     property int itemsHeight: 30
     property int topMargin: 10
 }

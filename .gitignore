@@ -1,0 +1,8 @@
+# IDEs & Editors
+.vscode/
+
+# QML/Qt
+.qmlls.ini
+*.qmlc
+*.jsc
+
