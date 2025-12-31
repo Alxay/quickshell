@@ -1,4 +1,5 @@
 import QtQuick
+import Quickshell.Io
 import "../Theme"
 
 Rectangle {
@@ -20,8 +21,13 @@ Rectangle {
             cursorShape: Qt.PointingHandCursor
             //menu for power off reboot
             onClicked: {
-                Qt.exit(0);
+                shutdownProcess.running = true;
             }
         }
+    }
+    Process {
+        id: shutdownProcess
+        running: false
+        command: ["poweroff"]
     }
 }

@@ -10,10 +10,11 @@ Rectangle {
     radius: 17
     border.width: 1
     anchors.centerIn: parent
-    anchors.verticalCenter: parent.verticalCenter
     border.color: Colors.barBorder
     anchors.topMargin: Colors.topMargin
+
     property int location: workspaceRepeater.itemAt(Hyprland.focusedWorkspace ? Hyprland.focusedWorkspace.id - 1 : 0).locationX
+    property int activeWorkspace: Hyprland.focusedWorkspace ? Hyprland.focusedWorkspace.id : 1
 
     Row {
         id: root
@@ -73,8 +74,7 @@ Rectangle {
                 // Obliczamy na który workspace upuściliśmy
                 var wsIndex = Math.round((parent.x - 6) / (32 + 8));
                 var wsId = wsIndex + 1;
-                parent.x = bar.location;
-                Hyprland.dispatch("workspace " + wsId);
+                wsId !== bar.activeWorkspace ? Hyprland.dispatch("workspace " + wsId) : parent.x = bar.location;
             }
         }
     }

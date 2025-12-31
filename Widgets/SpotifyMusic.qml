@@ -1,8 +1,4 @@
 import QtQuick
-import Quickshell
-import Quickshell.Services.Mpris
-import Quickshell.Wayland
-import QtQuick.Shapes
 import "../Theme/" // Colors
 
 Rectangle {
@@ -16,7 +12,7 @@ Rectangle {
     anchors.left: parent.left
 
     anchors.verticalCenter: parent.verticalCenter
-    anchors.leftMargin: 90  // Dodanie marginesu od lewej strony
+    anchors.leftMargin: 95 // Dodanie marginesu od lewej strony
     visible: root.player.spotifyPlayer !== null // Ukryj, jeśli nie ma odtwarzacza Spotify nie wyswietlamy
 
     Rectangle {

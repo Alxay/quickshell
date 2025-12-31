@@ -11,11 +11,14 @@ ShellRoot {
     id: root
     // property bool showMedia: false
     Component.onCompleted: {
-        Screenshot.init(); 
+        Screenshot.init();
     }
     Bar {
         id: mainBar
     }
+    // Spotify_text {
+    //     id: spotifyText
+    // }
     // SpotifyCard{
     //     id: spotifyCard
     //     anchor.window: mainBar.barr
