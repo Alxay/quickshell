@@ -63,5 +63,8 @@ PanelWindow {
             volumeIcon: sound.volume
             getVolume: sound.getVolume
         }
+        ShowDate {
+            date: clock.date
+        }
     }
 }
