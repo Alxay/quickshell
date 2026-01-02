@@ -4,6 +4,7 @@ import QtQuick
 import Quickshell.Io
 import Qt.labs.folderlistmodel
 
+//TODO: OPTYMALIZACJA: Załadować miniaturki z cache zamiast asynchronicznie skalować obrazy w locie
 PanelWindow {
     id: root
     required property var controller
@@ -40,6 +41,7 @@ PanelWindow {
         id: view
         anchors.fill: parent
         model: wallModel
+        clip: true
 
         pathItemCount: 5
         preferredHighlightBegin: 0.5
@@ -72,14 +74,11 @@ PanelWindow {
                     source: fileUrl
                     fillMode: Image.PreserveAspectCrop
 
-                    // --- OPTYMALIZACJA ---
                     sourceSize.width: 400
                     sourceSize.height: 250
                     asynchronous: true
                     cache: true
-
-                    // Usuń layer.enabled dla testu, jeśli nadal laguje.
-                    // Czasami maskowanie na Waylandzie jest kosztowne.
+                    smooth: true
                 }
 
                 Text {
@@ -94,9 +93,8 @@ PanelWindow {
                 }
             }
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
+            TapHandler {
+                onTapped: {
                     if (view.currentIndex === index) {
                         root.setWallpaper();
                     } else {
