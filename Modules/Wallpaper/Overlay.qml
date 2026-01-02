@@ -7,83 +7,173 @@ import Qt.labs.folderlistmodel
 PanelWindow {
     id: root
     required property var controller
-    property string filePath: ""
+    property string targetPath: ""
 
     WlrLayershell.layer: WlrLayer.Overlay
-    // WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
-    WlrLayershell.namespace: "wallpaper"
+    WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
+    WlrLayershell.namespace: "wallpaper-selector"
+
     color: "transparent"
+
     anchors {
         top: true
         bottom: true
         left: true
         right: true
     }
+
+    // Zamykanie na Escape
+    Shortcut {
+        sequence: "Escape"
+        onActivated: root.controller.close()
+    }
+
     FolderListModel {
         id: wallModel
-        folder: "file://" + "/home/alxay/Pictures/Wallpapers" // Path to wallpapers folder
-
-        nameFilters: ["*.jpg", "*.jpeg", "*.png", "*.webp"]
+        folder: "file:///home/alxay/Pictures/Wallpapers"
+        nameFilters: ["*.jpg", "*.jpeg", "*.png", "*.webp", "*.gif"]
         showDirs: false
-        showDotAndDotDot: false
         sortField: FolderListModel.Name
     }
-    GridView {
-        id: grid
+
+    PathView {
+        id: view
         anchors.fill: parent
-        anchors.margins: 20
-
-        cellWidth: 220
-        cellHeight: 140
-        clip: true
-        focus: true // Enable keyboard focus for scrolling
-
         model: wallModel
 
-        delegate: Rectangle {
-            width: grid.cellWidth - 10
-            height: grid.cellHeight - 10
-            color: "transparent"
-            radius: 8
-            border.color: hoverHandler.hovered ? "#ffffff" : "transparent"
-            border.width: 2
+        pathItemCount: 5
+        preferredHighlightBegin: 0.5
+        preferredHighlightEnd: 0.5
+        highlightRangeMode: PathView.StrictlyEnforceRange
 
-            Image {
-                id: imgPreview
+        focus: true
+        Keys.onRightPressed: incrementCurrentIndex()
+        Keys.onLeftPressed: decrementCurrentIndex()
+        Keys.onReturnPressed: root.setWallpaper()
+
+        delegate: Item {
+            width: 400
+            height: 250
+            z: PathView.z
+            scale: PathView.iconScale
+            opacity: PathView.iconOpacity
+
+            Rectangle {
+                id: wrapper
                 anchors.fill: parent
-                anchors.margins: 4
+                radius: 15
+                color: "black"
+                border.color: wrapper.PathView.isCurrentItem ? "#89b4fa" : "transparent"
+                border.width: 3
 
-                source: fileUrl // Rola dostarczana przez FolderListModel
-                fillMode: Image.PreserveAspectCrop
-                sourceSize.width: 220
-                sourceSize.height: 140
-                asynchronous: true
-                cache: true
-                layer.enabled: true
-            }
-            HoverHandler {
-                id: hoverHandler
-                cursorShape: Qt.PointingHandCursor
+                Image {
+                    anchors.fill: parent
+                    anchors.margins: 3
+                    source: fileUrl
+                    fillMode: Image.PreserveAspectCrop
+
+                    // --- OPTYMALIZACJA ---
+                    sourceSize.width: 400
+                    sourceSize.height: 250
+                    asynchronous: true
+                    cache: true
+
+                    // Usuń layer.enabled dla testu, jeśli nadal laguje.
+                    // Czasami maskowanie na Waylandzie jest kosztowne.
+                }
+
+                Text {
+                    anchors.top: parent.bottom
+                    anchors.topMargin: 10
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: fileName
+                    color: "white"
+                    visible: wrapper.PathView.isCurrentItem
+                    font.pixelSize: 16
+                    font.bold: true
+                }
             }
 
-            TapHandler {
-                onTapped: {
-                    console.log("Wybrano tapetę: " + fileName);
-                    console.log("Pełna ścieżka: " + filePath);
-                    root.filePath = "/home" + filePath.slice(5);
-                    console.log("Pełna ścieżka do ustawienia: " + root.filePath);
-                    changeWallpaper.running = true;
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    if (view.currentIndex === index) {
+                        root.setWallpaper();
+                    } else {
+                        view.currentIndex = index;
+                    }
                 }
             }
         }
+
+        path: Path {
+            startX: 0
+            startY: view.height / 2
+            PathAttribute {
+                name: "iconScale"
+                value: 0.6
+            }
+            PathAttribute {
+                name: "iconOpacity"
+                value: 0.5
+            }
+            PathAttribute {
+                name: "z"
+                value: 0
+            }
+            PathLine {
+                x: view.width / 2
+                y: view.height / 2
+            }
+            PathAttribute {
+                name: "iconScale"
+                value: 1.3
+            }
+            PathAttribute {
+                name: "iconOpacity"
+                value: 1.0
+            }
+            PathAttribute {
+                name: "z"
+                value: 100
+            }
+            PathLine {
+                x: view.width
+                y: view.height / 2
+            }
+            PathAttribute {
+                name: "iconScale"
+                value: 0.6
+            }
+            PathAttribute {
+                name: "iconOpacity"
+                value: 0.5
+            }
+            PathAttribute {
+                name: "z"
+                value: 0
+            }
+        }
     }
+
+    function setWallpaper() {
+        var url = wallModel.get(view.currentIndex, "fileUrl").toString();
+        var cleanPath = url.replace("file://", "");
+
+        console.log("Ustawiam tapetę: " + cleanPath);
+        root.targetPath = cleanPath;
+        root.visible = false;
+        swwwProcess.running = true;
+    }
+
     Process {
-        id: changeWallpaper
+        id: swwwProcess
         running: false
-        command: ["swww", "img", root.filePath, "--transition-type", "any", "--transition-duration", "2.4", "--transition-fps", "60"]
+        command: ["swww", "img", root.targetPath, "--transition-type", "grow", "--transition-pos", "0.5,0.5", "--transition-duration", "2.0", "--transition-fps", "60" // Zmniejszamy FPS tranzycji, 144 to za dużo przy włączonym compositorze
+        ]
         onExited: code => {
-            console.log("Process zakończony z kodem", code);
-            controller.close();
+            console.log("SWWW Exit: " + code);
+            root.controller.close();
         }
     }
 }
