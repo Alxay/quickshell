@@ -53,13 +53,13 @@ Rectangle {
     Process {
         id: increaseVolume
         running: false
-        command: ["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+"]
+        command: ["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "2%+"]
         onExited: root.getVolume.running = true // Odśwież po zakończeniu procesu
     }
     Process {
         id: decreaseVolume
         running: false
-        command: ["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-"]
+        command: ["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "2%-"]
         onExited: root.getVolume.running = true // Odśwież po zakończeniu procesu
     }
 }
