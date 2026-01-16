@@ -32,7 +32,7 @@ PanelWindow {
     FolderListModel {
         id: wallModel
         folder: "file:///home/alxay/Pictures/Wallpapers"
-        nameFilters: ["*.jpg", "*.jpeg", "*.png", "*.webp", "*.gif"]
+        nameFilters: ["*.jpg", "*.jpeg", "*.png", "*.webp", "*.gif", "*.mp4"]
         showDirs: false
         sortField: FolderListModel.Name
     }

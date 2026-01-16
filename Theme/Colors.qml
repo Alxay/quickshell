@@ -11,7 +11,7 @@ QtObject {
 
     // Kolory Workspace'ów
     property color wsActive: '#a707da94'         // Aktywny
-    property color wsBg: '#001b1b1b'          // Pusty
+    property color wsBg: '#00000000'          // Pusty
     property color wsText: '#ffffff'        // Tekst
 
     // Bar
