@@ -1,4 +1,5 @@
 import QtQuick
+import Quickshell.Io
 import "../Theme"
 
 Rectangle {
@@ -52,6 +53,13 @@ Rectangle {
             anchors.left: parent.left
             rotation: 0
             anchors.leftMargin: 5
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: {
+                    off.running = true;
+                }
+            }
         }
         Text {
             text: "Arch"
@@ -60,6 +68,11 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: 34
+        }
+        Process {
+            id: off
+            running: false
+            command: ["poweroff"]
         }
     }
 }

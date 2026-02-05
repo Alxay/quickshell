@@ -48,7 +48,7 @@ Rectangle {
     Process {
         id: openNetworkManager
         running: false
-        command: ["kitty", "-e", "pavucontrol"]
+        command: ["pavucontrol"]
     }
     Process {
         id: increaseVolume
