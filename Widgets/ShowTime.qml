@@ -11,13 +11,14 @@ Rectangle {
     border.color: Colors.barBorder
     radius: 10
 
-    anchors.leftMargin: 3
+    anchors.leftMargin: 141
 
     Text {
-        text: "  " + parent.time //Clock symbol
+        // text: "  " + parent.time //Clock symbol
+        text: parent.time
         color: '#ffffff'
         anchors.centerIn: parent
         anchors.verticalCenter: parent.verticalCenter
-        font.pixelSize: 13
+        font.pixelSize: 14
     }
 }

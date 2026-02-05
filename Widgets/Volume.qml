@@ -14,7 +14,7 @@ Rectangle {
     color: Colors.background
     border.color: Colors.barBorder
     radius: 15
-    anchors.rightMargin: 93
+    anchors.rightMargin: 105
     Text {
         // Wi-Fi symbol
         // text: "\uF1EB"  // Unicode symbol for Wi-Fi

@@ -6,7 +6,7 @@ import QtQuick
 Scope {
     id: root
     property string strength: "N/A"
-    property string speed: ""
+    property string speed: "   !CONN"
     // Process {
     //     id: getNetworkSpeed
     //     command: ["sh", "-c", "IFACE=$(ip route | awk '/default/ {print $5}'); " + "RX1=$(cat /sys/class/net/$IFACE/statistics/rx_bytes); " + "sleep 1; " + "RX2=$(cat /sys/class/net/$IFACE/statistics/rx_bytes); " + "awk \"BEGIN {printf \\\"%.2f\\\", ($RX2-$RX1)*8/1000000}\""]
@@ -17,6 +17,22 @@ Scope {
     //         }
     //     }
     // }
+    Process {
+        id: getNetworkName
+        command: ["sh", "-c", "nmcli -t -f ACTIVE,SSID device wifi | grep '^tak' | cut -d ':' -f 2"]
+        running: true
+        stdout: StdioCollector {
+            onStreamFinished: {
+                var name = this.text.trim();
+                if (name.length > 0) {
+                    root.speed = "   " + name.substring(0, 6); // Limit to first 6 characters
+
+                } else {
+                    root.speed = "";
+                }
+            }
+        }
+    }
     Process {
         id: wifiProc
         command: ["sh", "-c", "nmcli -t -f ACTIVE,SSID,SIGNAL device wifi | grep '^tak' | cut -d ':' -f 3"]
@@ -61,6 +77,7 @@ Scope {
         onTriggered: {
             wifiProc.running = true;
             // getNetworkSpeed.running = true;
+            getNetworkName.running = true;
         }
     }
 }

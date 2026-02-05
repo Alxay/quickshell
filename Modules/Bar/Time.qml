@@ -34,7 +34,7 @@ Scope {
     //     text: root.time = Qt.formatDateTime(clock.date, "hh:mm ap")
     // }
     Text {
-        text: root.date = Qt.formatDateTime(clock.date, "yyyy-MM-dd")
+        text: root.date = Qt.formatDateTime(clock.date, "dddd, MMM dd") //day of week, month day
     }
     Timer {
         interval: 1000

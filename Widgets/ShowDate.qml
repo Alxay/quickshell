@@ -10,12 +10,13 @@ Rectangle {
     color: Colors.background
     border.color: Colors.barBorder
     radius: 10
-    anchors.rightMargin: 155
+    anchors.rightMargin: 158
 
     anchors.leftMargin: 3
 
     Text {
-        text: "  " + parent.date //Calendar symbol
+        //text: "  " + parent.date
+        text: parent.date + " |"
         color: '#ffffff'
         anchors.centerIn: parent
         anchors.verticalCenter: parent.verticalCenter

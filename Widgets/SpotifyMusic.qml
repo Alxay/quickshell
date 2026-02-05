@@ -6,13 +6,13 @@ Rectangle {
     required property var player
     color: Colors.barBackground
     width: 200
-    height: Colors.itemsHeight
+    height: parent.height
     radius: 10
     border.color: Colors.barBorder
     anchors.left: parent.left
 
     anchors.verticalCenter: parent.verticalCenter
-    anchors.leftMargin: 95 // Dodanie marginesu od lewej strony
+    anchors.leftMargin: 275 // Dodanie marginesu od lewej strony
     visible: root.player.spotifyPlayer !== null // Ukryj, jeśli nie ma odtwarzacza Spotify nie wyswietlamy
 
     Rectangle {
@@ -20,7 +20,7 @@ Rectangle {
         height: parent.height
         anchors.left: parent.left
         color: "transparent"
-        anchors.leftMargin: 7
+        anchors.leftMargin: 10
 
         Text {
             text: root.player.spotifyPlayer?.metadata["xesam:title"] ?? "Brak muzyki"

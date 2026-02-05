@@ -10,6 +10,7 @@ Rectangle {
     color: Colors.background
     border.color: Colors.barBorder
     radius: 15
+    anchors.rightMargin: 3
     Text {
         text: "\u23FB"  // Unicode symbol for power
         color: '#ffffff'

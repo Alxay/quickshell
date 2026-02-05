@@ -2,9 +2,9 @@ pragma Singleton
 import QtQuick
 
 QtObject {
-    property color background: '#222222'       // Tło ogólne
-    property color barBackground: '#222222'    // Tło paska
-    property color barBorder: "#444444"           // Ramki
+    property color background: '#00222222'       // Tło ogólne
+    property color barBackground: '#ad151515'    // Tło paska
+    property color barBorder: '#00444444'           // Ramki
     property color textPrimary: "#ffffff"      // Główny tekst
     property color textSecondary: "#FFFFFF" // Taki szarawy // Mniej ważny tekst
     property color active: '#e389fa'
