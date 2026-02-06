@@ -23,7 +23,7 @@ Rectangle {
             left: parent.left
         }
         width: 95
-        color: '#a1019978'
+        color: Colors.secondary
         topRightRadius: 15
         bottomRightRadius: 15
 
@@ -43,7 +43,7 @@ Rectangle {
             left: parent.left
         }
         width: 75
-        color: '#003e31'
+        color: Colors.primary
         topRightRadius: 15
         bottomRightRadius: 15
         Image {

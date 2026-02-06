@@ -8,6 +8,8 @@ QtObject {
     property color textPrimary: "#ffffff"      // Główny tekst
     property color textSecondary: "#FFFFFF" // Taki szarawy // Mniej ważny tekst
     property color active: '#e389fa'
+    property color primary: '#024d3d'        // Kolor główny
+    property color secondary: '#02785f'       // Kolor drugi
 
     // Kolory Workspace'ów
     property color wsActive: '#a707da94'         // Aktywny
